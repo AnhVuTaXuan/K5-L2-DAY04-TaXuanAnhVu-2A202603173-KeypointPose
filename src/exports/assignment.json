@@ -1,0 +1,65 @@
+{
+ "mssv": "2A202603173",
+ "ten": "TaXuanAnhVu",
+ "pool_version": "d04-k5-v2",
+ "cvat_user": "AnhvuBest",
+ "project": "d04-keypoint",
+ "persons": [
+  "000000019754.jpg",
+  "000000072098.jpg",
+  "000000196283.jpg",
+  "000000211458.jpg",
+  "000000292999.jpg",
+  "000000091637.jpg",
+  "000000157271.jpg",
+  "000000189365.jpg",
+  "000000069971.jpg",
+  "000000480582.jpg",
+  "000000572411.jpg",
+  "000000542160.jpg"
+ ],
+ "faces": [
+  "face_204787.jpg",
+  "face_300399.jpg",
+  "face_85624.jpg",
+  "face_449454.jpg",
+  "face_53580.jpg",
+  "face_345145.jpg",
+  "face_294580.jpg",
+  "face_490361.jpg"
+ ],
+ "tasks": {
+  "persons": {
+   "task_id": 17,
+   "job_id": 15,
+   "task_name": "persons-TaXuanAnhVu"
+  },
+  "faces": {
+   "task_id": 18,
+   "job_id": 16,
+   "task_name": "faces-TaXuanAnhVu"
+  },
+  "persons-extra": {
+   "task_id": 19,
+   "job_id": 17,
+   "task_name": "persons-extra-TaXuanAnhVu"
+  },
+  "faces-extra": {
+   "task_id": 20,
+   "job_id": 18,
+   "task_name": "faces-extra-TaXuanAnhVu"
+  }
+ },
+ "persons_extra": [
+  "000000074156.jpg",
+  "000000161603.jpg",
+  "000000465508.jpg"
+ ],
+ "faces_extra": [
+  "face_102517.jpg",
+  "face_300200.jpg",
+  "face_317330.jpg",
+  "face_344941.jpg",
+  "face_379585.jpg"
+ ]
+}
