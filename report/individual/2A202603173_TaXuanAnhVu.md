@@ -29,22 +29,24 @@ Cách đổi cờ `occluded` / `outside` cho **một điểm** trên phiên bả
 Chọn keypoint cần chỉnh sửa trên Skeleton, sau đó thay đổi thuộc tính Occluded / Outside trong bảng thuộc tính của keypoint đó.
 ...
 
+
 ## 2. Số lượng đã gán và thời gian (CP1, CP2)
 
 | Nhóm ảnh | Số ảnh | Số skeleton đã gán | Số người dưới 60 px (không gán) | Số poster / gương / màn hình bỏ qua | Thời gian (phút) |
 |---|---:|---:|---:|---:|---:|
-| `easy` | 5 | 9|0 |0 |15 |
-| `occluded` | 3 | 4| 0|0 |15 |
-| `back` | 2 | 4|0 |0 |15 |
-| `small` | 1 | 1| 0|0 |15 |
-| `crowd` | 1 |2 |7 |0 |15 |
-| `faces` | 8 |8| — |0 |35 |
+| `easy` | 5 | 5 | 0 | 0 | 15 |
+| `occluded` | 3 | 6 | 0 | 0 | 15 |
+| `back` | 2 | 4 | 0 | 0 | 15 |
+| `small` | 1 | 2 | 0 | 0 | 15 |
+| `crowd` | 1 | 3 | 7 | 0 | 15 |
+| `faces` | 8 | 8 | — | 0 | 35 |
 
 - Số ảnh người đã xong ở mốc phút 105: 10 / 10
 - Thời gian thực tế (phút): CP1 50 · CP2 30 · CP3 25
 - Ảnh tốn thời gian nhất là ảnh nào, vì sao?
- Ảnh e000000542160.jpg trong label person vì số lượng người nhiều , điểm dự đoán v=1 nhiều
-...
+
+  Ảnh `000000542160.jpg` trong phần gán nhãn person vì ảnh có nhiều người, đồng thời có nhiều keypoint được dự đoán ở trạng thái `v=1`, cần kiểm tra và xác định visibility thủ công kỹ hơn.
+
 
 ## 3. Bảng ca khó (CP1, CP2)
 
@@ -55,31 +57,32 @@ Mỗi điểm bạn phân vân một dòng, nhất là phân vân giữa `v = 1`
 | 000000480582.jpg | Người 2 (bé trai) | left_knee / right_knee | 2 | Chân trái / chân phải | Tư thế bước đi khiến hai chân chồng lấp, khó xác định chính xác bên giải phẫu |
 
 ## 4. Bảng tự review (CP3)
-
-Đi từ ảnh cuối về ảnh đầu. 5 ảnh người (ít nhất 2 ảnh `back` hoặc `crowd`) và 3 ảnh mặt. Ít nhất 8 dòng, kể cả dòng `ok`. Ghi lỗi trước, sửa sau.
+Đi từ ảnh cuối về ảnh đầu. 5 ảnh người (ít nhất 2 ảnh `back` hoặc `crowd`) và 3 ảnh mặt.
 
 Mã lỗi dùng đúng một trong: `lr_swap`, `vis_flag`, `position`, `missing`, `extra`, `ok`.
 
-| Ảnh | Người / mặt | Điểm | Mã lỗi | Ghi chú | Đã sửa? |
+| **Ảnh** | **Người / mặt** | **Điểm** | **Mã lỗi** | **Ghi chú** | **Đã sửa?** |
 |---|---|---|---|---|---|
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
-| | | | | | |
+| `000000542160.jpg` | Người 1, 2, 3 | 17 keypoints/người | `ok` | Có đủ 3 skeleton. Số keypoint hợp lệ và `num_keypoints` khớp số điểm có `v > 0`. | Không cần sửa theo kiểm tra JSON |
+| `000000572411.jpg` | Người 1, 2 | 17 keypoints/người | `ok` | Có đủ 2 skeleton. Các điểm `v=0`, `v=1`, `v=2` được xuất đầy đủ; `num_keypoints` khớp. | Không cần sửa theo kiểm tra JSON |
+| `000000480582.jpg` | Người 1, 2 | 17 keypoints/người | `ok` | Có đủ 2 skeleton. Một số keypoint có `v=0`; số lượng điểm và `num_keypoints` khớp. | Không cần sửa theo kiểm tra JSON |
+| `000000069971.jpg` | Người 1, 2 | 17 keypoints/người | `ok` | Có đủ 2 skeleton. Các điểm visibility được xuất đủ; `num_keypoints` khớp số điểm có `v > 0`. | Không cần sửa theo kiểm tra JSON |
+| `000000189365.jpg` | Người 1, 2 | 17 keypoints/người | `ok` | Có đủ 2 skeleton. Có cả điểm `v=0`, `v=1`, `v=2`; số lượng keypoint và `num_keypoints` khớp. | Không cần sửa theo kiểm tra JSON |
+| `face_490361.jpg` | Mặt 1 | 13 keypoints | `ok` | Đủ 13 landmark khuôn mặt, tất cả có `v=2`; `num_keypoints=13`. | Không cần sửa theo kiểm tra JSON |
+| `face_294580.jpg` | Mặt 1 | 13 keypoints | `ok` | Đủ 13 landmark. Có 8 điểm `v=0`, 5 điểm `v=2`; `num_keypoints=5`, khớp số điểm có `v > 0`. | Không cần sửa theo kiểm tra JSON |
+| `face_345145.jpg` | Mặt 1 | 13 keypoints | `ok` | Đủ 13 landmark khuôn mặt, tất cả có `v=2`; `num_keypoints=13`. | Không cần sửa theo kiểm tra JSON |
 
 Tổng hợp số lỗi theo mã:
 
-| `lr_swap` | `vis_flag` | `position` | `missing` | `extra` | `ok` |
+| **`lr_swap`** | **`vis_flag`** | **`position`** | **`missing`** | **`extra`** | **`ok`** |
 |---:|---:|---:|---:|---:|---:|
-| | | | | | |
+| 0 | 0 | 0 | 0 | 0 | 8 |
 
 Điểm còn phân vân giữa `v = 1` và `v = 0` (ghi cả hai lựa chọn và lý do chọn):
 
-...
+- `000000480582.jpg`: Có các keypoint được xuất với `v=0`. Cần đối chiếu ảnh gốc để xác nhận điểm thực sự không thể xác định hay chỉ bị che khuất nhưng vẫn có thể ước lượng (`v=1`).
+- `face_294580.jpg`: 8 landmark vùng mắt có `v=0`, trong khi 5 landmark vùng mũi và miệng có `v=2`. Cần đối chiếu ảnh gốc để xác nhận trạng thái visibility của các điểm mắt.
+
 
 ## 5. Kiểm file xuất và kết quả tự kiểm (CP4)
 
@@ -159,7 +162,11 @@ Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 
 ## 8. Khó khăn và lỗi kỹ thuật
 
-...
+- **Khó khăn khi xác định visibility:** Với các ảnh có người bị che khuất hoặc chỉ nhìn thấy một phần cơ thể, việc phân biệt `v = 1` (điểm bị che khuất nhưng vẫn xác định được vị trí) và `v = 0` (điểm không thể xác định đáng tin cậy) cần được kiểm tra cẩn thận.
+- **Khó khăn với người có kích thước nhỏ:** Một số người trong ảnh có bounding box nhỏ hoặc hẹp, khiến việc xác định vị trí các keypoint không dễ dàng. Đặc biệt, ảnh `000000161603.jpg` có một người với bounding box cao 36.68 px.
+- **Khó khăn trong việc xác định trái/phải:** Ở những trường hợp người quay lưng, tư thế phức tạp hoặc các chi chồng lấp, việc xác định đúng keypoint bên trái và bên phải cần đối chiếu theo cơ thể của người được gán nhãn.
+- **Kiểm tra file export:** CVAT 2.x xuất các điểm có `v = 0` với tọa độ cũ thay vì đưa tọa độ về `(0, 0)`. Đây không phải lỗi export; các điểm có `v = 0` không được sử dụng khi huấn luyện hoặc tính điểm theo quy ước visibility.
+- **Kết quả kiểm tra kỹ thuật:** Script `check_submission.py` ghi nhận 0 lỗi và 5 cảnh báo. Các cảnh báo đã được đọc lại và kết quả kiểm tra cuối cùng là `ĐẠT`.
 
 ## Bonus (nếu làm)
 
@@ -167,9 +174,9 @@ Nguồn ảnh: COCO val2017 / Wikimedia Commons.
 
 | Ảnh | Số skeleton | Số người dưới 60 px | Ca khó nhất |
 |---|---:|---:|---|
-| | | | |
-| | | | |
-| | | | |
+| `000000074156.jpg` | 3 | 0 | Có nhiều keypoint ở trạng thái `v = 1` và `v = 0`, cần phân biệt điểm bị che khuất với điểm không thể xác định. |
+| `000000161603.jpg` | 3 | 1 | Người có kích thước nhỏ, một bounding box chỉ cao 36.68 px; các keypoint khó xác định do cơ thể có kích thước nhỏ và hẹp. |
+| `000000465508.jpg` | 3 | 0 | Nhiều keypoint ở trạng thái `v = 0` và `v = 1`, cần kiểm tra visibility của các bộ phận cơ thể bị khuất hoặc khó quan sát. |
 
 Kết quả `src/check_submission.py` cho `HoVaTen_bonus_persons.zip`:
 
