@@ -33,12 +33,12 @@ Chọn keypoint cần chỉnh sửa trên Skeleton, sau đó thay đổi thuộc
 
 | Nhóm ảnh | Số ảnh | Số skeleton đã gán | Số người dưới 60 px (không gán) | Số poster / gương / màn hình bỏ qua | Thời gian (phút) |
 |---|---:|---:|---:|---:|---:|
-| `easy` | 5 | | | | |
-| `occluded` | 3 | | | | |
-| `back` | 2 | | | | |
-| `small` | 1 | 1| 0|0 | |
-| `crowd` | 1 |2 |7 |0 | |
-| `faces` | 8 |8| — |0 | |
+| `easy` | 5 | 9|0 |0 |15 |
+| `occluded` | 3 | 4| 0| |15 |
+| `back` | 2 | 4|0 |0 |15 |
+| `small` | 1 | 1| 0|0 |15 |
+| `crowd` | 1 |2 |7 |0 |15 |
+| `faces` | 8 |8| — |0 |35 |
 
 - Số ảnh người đã xong ở mốc phút 105: 10 / 10
 - Thời gian thực tế (phút): CP1 50 · CP2 30 · CP3 25
@@ -87,13 +87,13 @@ Tự kiểm tay trong file JSON:
 
 | File | Người / mặt kiểm (ảnh, thứ tự) | Số phần tử `keypoints` | Điểm `outside` ra `v = 0`, `occluded` ra `v = 1`? | `num_keypoints` khớp? |
 |---|---|---:|---|---|
-| `HoVaTen_persons.zip` | | | | |
-| `HoVaTen_persons.zip` | | | | |
-| `HoVaTen_faces.zip` | | | | |
+| `TaXuanAnhVu_persons.zip` | Ảnh `000000480582.jpg`, Người 1 | 17 | Có `v=0` (7 điểm), không có `v=1` | Có (10) |
+| `TaXuanAnhVu_persons.zip` | Ảnh `000000480582.jpg`, Người 2 | 17 | Có `v=0` (4 điểm), không có `v=1` | Có (13) |
+| `TaXuanAnhVu_faces.zip` | Ảnh `face_294580.jpg`, Mặt 1 | 13 | Có `v=0` (8 điểm), không có `v=1` | Có (5) |
 
-Sau khi xuất, CVAT ghi `occluded` thành `v = ___` và `outside` thành `v = ___`. Tọa độ của điểm `outside` trong file là `0, 0` hay tọa độ cũ? ___
+Sau khi xuất, CVAT ghi `occluded` thành `v = 1` và `outside` thành `v = 0`. Tọa độ của điểm `outside` trong file là tọa độ cũ, không phải `(0, 0)`.
 
-Hai job đã chuyển sang completed trên CVAT? Có / Không:Có
+Hai job đã chuyển sang completed trên CVAT? Có / Không: **Có**
 
 Dán phần **TÓM TẮT** in ra từ `src/check_submission.py`:
 
