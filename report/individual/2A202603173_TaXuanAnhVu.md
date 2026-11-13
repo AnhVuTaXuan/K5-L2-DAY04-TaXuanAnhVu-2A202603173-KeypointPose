@@ -34,7 +34,7 @@ Chọn keypoint cần chỉnh sửa trên Skeleton, sau đó thay đổi thuộc
 | Nhóm ảnh | Số ảnh | Số skeleton đã gán | Số người dưới 60 px (không gán) | Số poster / gương / màn hình bỏ qua | Thời gian (phút) |
 |---|---:|---:|---:|---:|---:|
 | `easy` | 5 | 9|0 |0 |15 |
-| `occluded` | 3 | 4| 0| |15 |
+| `occluded` | 3 | 4| 0|0 |15 |
 | `back` | 2 | 4|0 |0 |15 |
 | `small` | 1 | 1| 0|0 |15 |
 | `crowd` | 1 |2 |7 |0 |15 |
